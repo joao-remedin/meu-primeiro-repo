@@ -211,33 +211,20 @@
   .sensorial-valor { color: #666; }
 
   /* medalhas */
-  .premios { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+  .premios { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; align-items: flex-end; }
   .medalha {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
-    max-width: 80px;
+    max-width: 90px;
   }
-  .medalha-icone {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: 700;
-    text-align: center;
-    line-height: 1.2;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 6px;
+  .medalha img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
   }
-  .medalha-icone.ouro   { background: radial-gradient(circle at 35% 35%, #f5c842, #b8860b); border: 2px solid #d4a012; }
-  .medalha-icone.prata  { background: radial-gradient(circle at 35% 35%, #d8d8d8, #888); border: 2px solid #999; }
-  .medalha-icone.bronze { background: radial-gradient(circle at 35% 35%, #cd9c6a, #7b4f2e); border: 2px solid #9a6235; }
   .medalha-label { font-size: 9px; color: #888; text-align: center; line-height: 1.3; }
 
   /* tabela de preços */
@@ -373,8 +360,8 @@
       <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Caipirinhas, drinks, churrasco, confraternizações</span></div>
     </div>
     <div class="premios">
-      <div class="medalha"><div class="medalha-icone ouro">1º</div><div class="medalha-label">CNA/Sebrae Brasil Artesanal 2022</div></div>
-      <div class="medalha"><div class="medalha-icone bronze">3º</div><div class="medalha-label">Festival Mundial Salinas 2025</div></div>
+      <div class="medalha"><img src="images/selos/cna-brasil-artesanal-2022-ouro.png" alt="1º CNA Brasil Artesanal 2022"><div class="medalha-label">CNA/Sebrae Brasil Artesanal 2022</div></div>
+      <div class="medalha"><img src="images/selos/festival-salinas-2025.png" alt="Festival Salinas 2025"><div class="medalha-label">Festival Mundial de Salinas 2025</div></div>
     </div>
     <div class="preco-titulo">Tabela de Preços — Pessoa Física</div>
     <table class="preco-table">
@@ -417,7 +404,7 @@
       <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Churrasco, queijos, rabo de galo, comida mineira</span></div>
     </div>
     <div class="premios">
-      <div class="medalha"><div class="medalha-icone ouro">Top 150</div><div class="medalha-label">Cúpula da Cachaça — Melhores do Brasil</div></div>
+      <div class="medalha"><img src="images/selos/cupula-da-cachaca.png" alt="Cúpula da Cachaça"><div class="medalha-label">Top 150 Melhores do Brasil</div></div>
     </div>
     <div class="preco-titulo">Pessoa Física</div>
     <table class="preco-table">
@@ -460,7 +447,7 @@
       <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Degustação leve, presentes, almoços especiais, drinks premium</span></div>
     </div>
     <div class="premios">
-      <div class="medalha"><div class="medalha-icone ouro">1º</div><div class="medalha-label">Areia Mostra Cachaça 2024</div></div>
+      <div class="medalha"><img src="images/selos/areia-mostra-ouro-2024-a.png" alt="Ouro Areia Mostra Cachaça 2024"><div class="medalha-label">Ouro — Areia Mostra Cachaça 2024</div></div>
     </div>
     <div class="preco-titulo">Pessoa Física</div>
     <table class="preco-table">
@@ -540,11 +527,10 @@
       <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Carnes vermelhas, queijos maturados, charutos, presentes sofisticados</span></div>
     </div>
     <div class="premios">
-      <div class="medalha"><div class="medalha-icone ouro">Top 50</div><div class="medalha-label">Madeiras Brasileiras — Cúpula da Cachaça 2026</div></div>
-      <div class="medalha"><div class="medalha-icone ouro">1º</div><div class="medalha-label">Grande Ouro Mió de Goiás 2025</div></div>
-      <div class="medalha"><div class="medalha-icone ouro">1º</div><div class="medalha-label">Grande Ouro Mió de Goiás 2026</div></div>
-      <div class="medalha"><div class="medalha-icone ouro">1º</div><div class="medalha-label">Ouro Areia Mostra Cachaça 2024</div></div>
-      <div class="medalha"><div class="medalha-icone ouro">1º</div><div class="medalha-label">Ouro New Spirits 2026</div></div>
+      <div class="medalha"><img src="images/selos/cupula-da-cachaca.png" alt="Cúpula da Cachaça 2026"><div class="medalha-label">Top 50 Madeiras Brasileiras — Cúpula 2026</div></div>
+      <div class="medalha"><img src="images/selos/mio-goias-grande-ouro-2025.png" alt="Grande Ouro Mió de Goiás 2025"><div class="medalha-label">Grande Ouro — Mió de Goiás 2025</div></div>
+      <div class="medalha"><img src="images/selos/areia-mostra-ouro-2024-b.png" alt="Ouro Areia Mostra 2024"><div class="medalha-label">Ouro — Areia Mostra Cachaça 2024</div></div>
+      <div class="medalha"><img src="images/selos/new-spirits-2026.webp" alt="New Spirits 2026"><div class="medalha-label">Ouro — New Spirits 2026</div></div>
     </div>
     <div class="preco-titulo">Pessoa Física</div>
     <table class="preco-table">
@@ -584,8 +570,8 @@
       <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Presentes especiais, celebrações, degustação pura</span></div>
     </div>
     <div class="premios">
-      <div class="medalha"><div class="medalha-icone prata">2º</div><div class="medalha-label">Expocachaça 2021</div></div>
-      <div class="medalha"><div class="medalha-icone ouro">1º</div><div class="medalha-label">Mió de Goiás 2025</div></div>
+      <div class="medalha"><img src="images/selos/expocachaca-prata-2021.png" alt="Prata Expocachaça 2021"><div class="medalha-label">Prata — Expocachaça 2021</div></div>
+      <div class="medalha"><img src="images/selos/mio-goias-ouro-2025.png" alt="Ouro Mió de Goiás 2025"><div class="medalha-label">Ouro — Mió de Goiás 2025</div></div>
     </div>
     <div class="preco-titulo">Pessoa Física</div>
     <table class="preco-table">
@@ -604,39 +590,39 @@
      DEFUMADA
 ════════════════════════════════════════ -->
 <div class="page-header"><span>Alambique Remedin</span></div>
-<section class="produto" style="background:#1a1100;">
-  <div class="produto-foto" style="background:#120f00;">
-    <img src="images/jatoba-lifestyle.jpg" alt="Remedin Defumada" style="opacity:0.6; filter: sepia(60%) contrast(1.2);">
+<section class="produto">
+  <div class="produto-foto bottleshot" style="background:#f5f2ee;">
+    <img src="images/defumada.jpg" alt="Remedin Defumada" onerror="this.src='images/jatoba.jpg'">
   </div>
-  <div class="produto-info" style="background:#1f1a00;">
-    <svg class="emblema-svg" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="#d4a012" stroke-width="1.5"/><text x="30" y="35" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#d4a012">R</text></svg>
-    <div class="produto-tipo" style="color:#d4a012;">Cachaça Extrapremium · Blend Carvalho + Jatobá · 38% v/v</div>
-    <h2 class="produto-nome" style="color:#fff;">DEFUMADA</h2>
-    <p class="produto-desc" style="color:#ccc;">A primeira cachaça com processo voltado para adicionar notas defumadas à bebida. Com perfil intenso e personalidade marcante, foi criada para quem busca uma experiência sensorial profunda. Perfeita para fogo, carnes e drinks robustos.</p>
+  <div class="produto-info">
+    <svg class="emblema-svg" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="#1a1a1a" stroke-width="1.5"/><text x="30" y="35" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#1a1a1a">R</text></svg>
+    <div class="produto-tipo">Cachaça Extrapremium · Blend Carvalho + Jatobá · 38% v/v</div>
+    <h2 class="produto-nome">DEFUMADA</h2>
+    <p class="produto-desc">A primeira cachaça com processo voltado para adicionar notas defumadas à bebida. Com perfil intenso e personalidade marcante, foi criada para quem busca uma experiência sensorial profunda. Perfeita para fogo, carnes e drinks robustos.</p>
     <div class="sensorial">
-      <div class="sensorial-item"><span class="sensorial-label" style="color:#d4a012;">Madeira</span><span class="sensorial-valor" style="color:#aaa;">Blend de carvalho com Jatobá</span></div>
-      <div class="sensorial-item"><span class="sensorial-label" style="color:#d4a012;">Aroma</span><span class="sensorial-valor" style="color:#aaa;">Defumado, madeira tostada, molho barbecue, especiarias, caramelo leve</span></div>
-      <div class="sensorial-item"><span class="sensorial-label" style="color:#d4a012;">Sabor</span><span class="sensorial-valor" style="color:#aaa;">Marcante, seco, intenso, final defumado e persistente</span></div>
-      <div class="sensorial-item"><span class="sensorial-label" style="color:#d4a012;">Ideal</span><span class="sensorial-valor" style="color:#aaa;">Churrasco, costela, brisket, charutos, drinks intensos</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Madeira</span><span class="sensorial-valor">Blend de carvalho com Jatobá</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Aroma</span><span class="sensorial-valor">Defumado, madeira tostada, molho barbecue, especiarias, caramelo leve</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Sabor</span><span class="sensorial-valor">Marcante, seco, intenso, final defumado e persistente</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Churrasco, costela, brisket, charutos, drinks intensos</span></div>
     </div>
     <div class="premios">
-      <div class="medalha"><div class="medalha-icone prata">2º</div><div class="medalha-label" style="color:#aaa;">Areia Mostra Cachaça 2025</div></div>
-      <div class="medalha"><div class="medalha-icone bronze">3º</div><div class="medalha-label" style="color:#aaa;">Mió de Goiás 2026</div></div>
+      <div class="medalha"><img src="images/selos/areia-mostra-prata-2024-a.png" alt="Prata Areia 2025"><div class="medalha-label">Prata — Areia Mostra 2025</div></div>
+      <div class="medalha"><img src="images/selos/mio-goias-prata-2025.png" alt="Prata Mió Goiás 2026"><div class="medalha-label">Prata — Mió de Goiás 2026</div></div>
     </div>
-    <div class="preco-titulo" style="color:#d4a012;">Pessoa Física</div>
-    <table class="preco-table" style="color:#ccc;">
-      <tr><th>Volume</th><th>Preço</th></tr>
-      <tr><td style="color:#ccc; border-color:#333;">50 ml</td><td style="color:#ccc; border-color:#333;">R$ 20,00</td></tr>
-      <tr><td style="color:#ccc; border-color:#333;">200 ml</td><td style="color:#ccc; border-color:#333;">R$ 75,00</td></tr>
-      <tr><td style="color:#ccc; border-color:#333;">750 ml</td><td style="color:#ccc; border-color:#333;">R$ 250,00</td></tr>
-    </table>
-    <div class="preco-titulo" style="color:#d4a012; margin-top:12px;">Pessoa Jurídica</div>
+    <div class="preco-titulo">Pessoa Física</div>
     <table class="preco-table">
       <tr><th>Volume</th><th>Preço</th></tr>
-      <tr><td style="color:#ccc; border-color:#333;">50 ml</td><td style="color:#ccc; border-color:#333;">R$ 12,00</td></tr>
-      <tr><td style="color:#ccc; border-color:#333;">200 ml</td><td style="color:#ccc; border-color:#333;">R$ 35,00</td></tr>
-      <tr><td style="color:#ccc; border-color:#333;">750 ml</td><td style="color:#ccc; border-color:#333;">R$ 150,00</td></tr>
-      <tr><td style="color:#ccc; border-color:#333;">PET 2 L</td><td style="color:#ccc; border-color:#333;">R$ 300,00</td></tr>
+      <tr><td>50 ml</td><td>R$ 20,00</td></tr>
+      <tr><td>200 ml</td><td>R$ 75,00</td></tr>
+      <tr><td>750 ml</td><td>R$ 250,00</td></tr>
+    </table>
+    <div class="preco-titulo">Pessoa Jurídica</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 12,00</td></tr>
+      <tr><td>200 ml</td><td>R$ 35,00</td></tr>
+      <tr><td>750 ml</td><td>R$ 150,00</td></tr>
+      <tr><td>PET 2 L</td><td>R$ 300,00</td></tr>
     </table>
   </div>
 </section>
@@ -668,9 +654,9 @@
       <div class="produto-tipo">Casal Cachaceiro Blend 4 Madeiras</div>
       <p class="produto-desc">Criada por um casal e para casais. Blend ideal para um encontro especial. Sabores adocicados, sensação levemente seca e equilíbrio para dose ou drink.</p>
       <div class="premios" style="margin-bottom:12px;">
-        <div class="medalha"><div class="medalha-icone prata">Prata</div><div class="medalha-label">Concurso do Saber</div></div>
-        <div class="medalha"><div class="medalha-icone prata">Prata</div><div class="medalha-label">Concurso da Paraíba</div></div>
-        <div class="medalha"><div class="medalha-icone bronze">Bronze</div><div class="medalha-label">Brasil Spirits Cup</div></div>
+        <div class="medalha"><img src="images/selos/areia-mostra-prata-2024-a.png" alt="Prata Concurso"><div class="medalha-label">Prata — Concurso do Saber</div></div>
+        <div class="medalha"><img src="images/selos/areia-mostra-prata-2024-b.png" alt="Prata Paraíba"><div class="medalha-label">Prata — Concurso da Paraíba</div></div>
+        <div class="medalha"><img src="images/selos/brasil-spirits-cup-bronze-2025.png" alt="Bronze Brasil Spirits Cup"><div class="medalha-label">Bronze — Brasil Spirits Cup</div></div>
       </div>
       <table class="preco-table">
         <tr><th>Volume</th><th>PF</th><th>PJ</th></tr>
@@ -684,8 +670,8 @@
       <div class="produto-tipo">Gastrozinha Blend 4 Madeiras · Raquel Amaral (MasterChef)</div>
       <p class="produto-desc">Primeira cachaça assinada por uma chef de cozinha do Brasil. Raquel Amaral e The Taste assinam este blend maravilhoso — cujo sabor só é possível explicar degustando.</p>
       <div class="premios" style="margin-bottom:12px;">
-        <div class="medalha"><div class="medalha-icone prata">Prata</div><div class="medalha-label">Concurso da Paraíba</div></div>
-        <div class="medalha"><div class="medalha-icone ouro">4 Madr.</div><div class="medalha-label">São Paulo Melhores</div></div>
+        <div class="medalha"><img src="images/selos/areia-mostra-prata-2024-b.png" alt="Prata Paraíba"><div class="medalha-label">Prata — Concurso da Paraíba</div></div>
+        <div class="medalha"><img src="images/selos/mapa-da-cachaca-2025.png" alt="Mapa da Cachaça 2025"><div class="medalha-label">Mapa da Cachaça 2025</div></div>
       </div>
       <table class="preco-table">
         <tr><th>Volume</th><th>PF</th><th>PJ</th></tr>
