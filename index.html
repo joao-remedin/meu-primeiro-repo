@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo 2026 — Alambique Remedin</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: #fff;
+    color: #2c2c2c;
+  }
+
+  /* ── CAPA ── */
+  .cover {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+  .cover-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0.75;
+  }
+  .cover-logo {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    width: 90px;
+    background: rgba(50,50,50,0.85);
+    padding: 10px;
+    border-radius: 4px;
+  }
+  .cover-text {
+    position: relative;
+    z-index: 2;
+    padding: 48px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .cover-title {
+    font-size: 64px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -1px;
+    line-height: 1;
+    font-family: 'Arial Black', sans-serif;
+  }
+  .cover-subtitle {
+    background: #4a4a4a;
+    color: #fff;
+    padding: 14px 20px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  /* ── ORIGEM ── */
+  .origem {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 60vh;
+  }
+  .origem-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(30%);
+  }
+  .origem-text {
+    padding: 64px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #f8f6f2;
+  }
+  .brand-logo { width: 160px; margin-bottom: 32px; }
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  .origem-title {
+    font-size: 42px;
+    font-weight: 900;
+    font-family: 'Arial Black', sans-serif;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+  }
+  .origem-text p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 16px;
+  }
+
+  /* ── HEADER TOPO DE PÁGINA ── */
+  .page-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 40px;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+  }
+  .page-header span {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #aaa;
+  }
+
+  /* ── PRODUTO ── */
+  .produto {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 90vh;
+    border-bottom: 2px solid #f0ebe3;
+  }
+  .produto.invertido { direction: rtl; }
+  .produto.invertido > * { direction: ltr; }
+
+  .produto-foto {
+    background: #f5f3ef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-height: 500px;
+  }
+  .produto-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .produto-foto.bottleshot img {
+    object-fit: contain;
+    padding: 40px;
+    max-height: 700px;
+  }
+
+  .produto-info {
+    padding: 56px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+  }
+
+  .produto-emblema {
+    width: 48px;
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+
+  .produto-nome {
+    font-size: 46px;
+    font-weight: 900;
+    font-family: 'Arial Black', sans-serif;
+    color: #1a1a1a;
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+  .produto-tipo {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #b8960c;
+    margin-bottom: 20px;
+  }
+  .produto-desc {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 28px;
+    max-width: 440px;
+  }
+
+  .sensorial { margin-bottom: 28px; }
+  .sensorial-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .sensorial-label {
+    font-weight: 700;
+    color: #2c2c2c;
+    min-width: 60px;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding-top: 2px;
+  }
+  .sensorial-valor { color: #666; }
+
+  /* medalhas */
+  .premios { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; align-items: flex-end; }
+  .medalha {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    max-width: 90px;
+  }
+  .medalha img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+  }
+  .medalha-label { font-size: 9px; color: #888; text-align: center; line-height: 1.3; }
+
+  /* tabela de preços */
+  .ocasiao {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  .preco-titulo {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+  .preco-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .preco-table th {
+    text-align: left;
+    padding: 7px 12px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .preco-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #eee;
+    color: #444;
+  }
+  .preco-table tr:last-child td { border-bottom: none; }
+  .preco-table tr:nth-child(even) td { background: #fafaf8; }
+
+  /* ── GRUPO (Casal / Gastrozinha) ── */
+  .grupo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+    border-bottom: 2px solid #f0ebe3;
+  }
+  .grupo-foto {
+    overflow: hidden;
+    background: #f0ede6;
+  }
+  .grupo-foto img { width: 100%; height: 100%; object-fit: cover; }
+  .grupo-info {
+    padding: 56px 52px;
+    background: #faf8f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* ── CONTATO ── */
+  .contato {
+    padding: 72px 80px;
+    text-align: center;
+    background: #1a1a1a;
+    color: #fff;
+  }
+  .contato img { width: 120px; margin-bottom: 28px; filter: invert(1); opacity: .85; }
+  .contato h2 { font-size: 32px; font-family: 'Arial Black', sans-serif; margin-bottom: 8px; }
+  .contato p { color: #bbb; font-size: 15px; margin-bottom: 6px; }
+  .contato a { color: #d4a012; text-decoration: none; }
+
+  /* ── RESPONSIVO ── */
+  @media (max-width: 768px) {
+    .cover-title { font-size: 40px; }
+    .cover-text { padding: 28px; flex-direction: column; gap: 20px; }
+    .origem, .produto, .grupo { grid-template-columns: 1fr; }
+    .produto.invertido { direction: ltr; }
+    .produto-info, .grupo-info { padding: 36px 28px; }
+    .produto-nome { font-size: 34px; }
+    .origem-text { padding: 36px 28px; }
+  }
+
+  /* SVG emblema inline */
+  .emblema-svg { width: 48px; height: 48px; margin-bottom: 20px; opacity: 0.6; }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<section class="cover">
+  <img class="cover-photo" src="images/capa.jpg" alt="Cachaça Remedin">
+  <img class="cover-logo" src="images/logo.png" alt="Remedin">
+  <div class="cover-text">
+    <div class="cover-title">CATÁLOGO<br>2026</div>
+    <div class="cover-subtitle">PRODUTOS<br>DO ALAMBIQUE<br>REMEDIN</div>
+  </div>
+</section>
+
+<!-- ORIGEM -->
+<section class="origem">
+  <img class="origem-photo" src="images/jatoba-lifestyle.jpg" alt="Alambique Remedin">
+  <div class="origem-text">
+    <img class="brand-logo" src="images/logo.png" alt="Remedin">
+    <div class="section-eyebrow">Nossa história</div>
+    <h2 class="origem-title">ORIGEM</h2>
+    <p>Produzida por um casal de mineiros que reside há vinte anos em Brasília, a Remedin guarda todas as tradições da produção artesanal — alambique de cobre, lenha, fermentação natural e envelhecimento em tonéis de madeira.</p>
+    <p>Além da qualidade, somos a primeira cachaça com rótulo de conteúdo 100% customizável do Brasil. É só mandar sua ideia e receber em casa a sua cachaça personalizada.</p>
+    <p style="margin-top:8px; font-size:13px; color:#b8960c; letter-spacing:1px; text-transform:uppercase; font-weight:700;">remedincachaca.com.br · @remedincachaca</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SÉRIE PRATA
+════════════════════════════════════════ -->
+<div class="page-header"><span>Alambique Remedin</span></div>
+<section class="produto">
+  <div class="produto-foto">
+    <img src="images/prata-page.png" alt="Remedin Prata" style="object-position: center 10%;">
+  </div>
+  <div class="produto-info">
+    <svg class="emblema-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="30" r="28" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="30" y="35" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#1a1a1a">R</text>
+    </svg>
+    <div class="produto-tipo">Cachaça Prata · 38% v/v</div>
+    <h2 class="produto-nome">SÉRIE<br>PRATA</h2>
+    <p class="produto-desc">A expressão mais pura, leve e versátil da Remedin. Sem passagem por madeira, preserva o frescor da cana-de-açúcar e entrega uma experiência limpa e essencialmente brasileira.</p>
+    <div class="sensorial">
+      <div class="sensorial-item"><span class="sensorial-label">Aroma</span><span class="sensorial-valor">Cana fresca, caldo de cana, leve vegetal e álcool bem integrado</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Sabor</span><span class="sensorial-valor">Leve, seco, limpo e macio — final suave</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Caipirinhas, drinks, churrasco, confraternizações</span></div>
+    </div>
+    <div class="premios">
+      <div class="medalha"><img src="images/selos/cna-brasil-artesanal-2022-ouro.png" alt="1º CNA Brasil Artesanal 2022"><div class="medalha-label">CNA/Sebrae Brasil Artesanal 2022</div></div>
+      <div class="medalha"><img src="images/selos/festival-salinas-2025.png" alt="Festival Salinas 2025"><div class="medalha-label">Festival Mundial de Salinas 2025</div></div>
+    </div>
+    <div class="preco-titulo">Tabela de Preços — Pessoa Física</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 12,50</td></tr>
+      <tr><td>200 ml</td><td>R$ 35,00</td></tr>
+      <tr><td>500 ml</td><td>R$ 65,00</td></tr>
+    </table>
+    <div class="preco-titulo">Pessoa Jurídica</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 8,00</td></tr>
+      <tr><td>200 ml</td><td>R$ 18,00</td></tr>
+      <tr><td>500 ml</td><td>R$ 45,00</td></tr>
+      <tr><td>PET 2 L</td><td>R$ 100,00</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SÉRIE OURO
+════════════════════════════════════════ -->
+<div class="page-header"><span>Alambique Remedin</span></div>
+<section class="produto invertido">
+  <div class="produto-foto">
+    <img src="images/ouro-page.png" alt="Remedin Ouro" style="object-position: center 10%;">
+  </div>
+  <div class="produto-info">
+    <svg class="emblema-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="30" r="28" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="30" y="35" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#1a1a1a">R</text>
+    </svg>
+    <div class="produto-tipo">Cachaça Premium · Carvalho Europeu · 38% v/v</div>
+    <h2 class="produto-nome">SÉRIE<br>OURO</h2>
+    <p class="produto-desc">A cachaça amiga do dia a dia. Macia, equilibrada e levemente amadeirada. Seu perfil sensorial combina presença de madeira com notas suaves da cana, criando uma bebida agradável tanto pura quanto em drinks encorpados.</p>
+    <div class="sensorial">
+      <div class="sensorial-item"><span class="sensorial-label">Madeira</span><span class="sensorial-valor">Carvalho europeu ex-malte</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Aroma</span><span class="sensorial-valor">Mel, baunilha, cana madura, especiarias leves</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Sabor</span><span class="sensorial-valor">Macio, equilibrado, levemente adocicado</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Churrasco, queijos, rabo de galo, comida mineira</span></div>
+    </div>
+    <div class="premios">
+      <div class="medalha"><img src="images/selos/cupula-da-cachaca.png" alt="Cúpula da Cachaça"><div class="medalha-label">Top 150 Melhores do Brasil</div></div>
+    </div>
+    <div class="preco-titulo">Pessoa Física</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 12,56</td></tr>
+      <tr><td>200 ml</td><td>R$ 35,00</td></tr>
+      <tr><td>500 ml</td><td>R$ 65,00</td></tr>
+    </table>
+    <div class="preco-titulo">Pessoa Jurídica</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 9,00</td></tr>
+      <tr><td>200 ml</td><td>R$ 20,00</td></tr>
+      <tr><td>500 ml</td><td>R$ 45,00</td></tr>
+      <tr><td>PET 2 L</td><td>R$ 100,00</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     JEQUITIBÁ-ROSA
+════════════════════════════════════════ -->
+<div class="page-header"><span>Alambique Remedin</span></div>
+<section class="produto">
+  <div class="produto-foto">
+    <img src="images/jequitiba.jpg" alt="Remedin Jequitibá-Rosa">
+  </div>
+  <div class="produto-info">
+    <svg class="emblema-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="30" r="28" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="30" y="35" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#1a1a1a">R</text>
+    </svg>
+    <div class="produto-tipo">Cachaça Premium · Jequitibá-Rosa · 38% v/v</div>
+    <h2 class="produto-nome">JEQUITIBÁ-<br>ROSA</h2>
+    <p class="produto-desc">Elegante, leve e muito equilibrada. O Jequitibá é uma madeira brasileira conhecida por preservar a identidade da cana, oferecendo suavidade sem mascarar o sabor original. Perfeita para quem procura uma bebida refinada e delicada.</p>
+    <div class="sensorial">
+      <div class="sensorial-item"><span class="sensorial-label">Madeira</span><span class="sensorial-valor">Jequitibá-Rosa — madeira brasileira de 1º uso</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Aroma</span><span class="sensorial-valor">Cana fresca, notas herbais, toque floral, madeira delicada</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Sabor</span><span class="sensorial-valor">Leve, elegante, madeira sutil, final suave</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Degustação leve, presentes, almoços especiais, drinks premium</span></div>
+    </div>
+    <div class="premios">
+      <div class="medalha"><img src="images/selos/areia-mostra-ouro-2024-a.png" alt="Ouro Areia Mostra Cachaça 2024"><div class="medalha-label">Ouro — Areia Mostra Cachaça 2024</div></div>
+    </div>
+    <div class="preco-titulo">Pessoa Física</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 15,00</td></tr>
+      <tr><td>750 ml</td><td>R$ 110,00</td></tr>
+    </table>
+    <div class="preco-titulo">Pessoa Jurídica</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 9,00</td></tr>
+      <tr><td>750 ml</td><td>R$ 79,00</td></tr>
+      <tr><td>PET 2 L</td><td>R$ 150,00</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     AMBURANA
+════════════════════════════════════════ -->
+<div class="page-header"><span>Alambique Remedin</span></div>
+<section class="produto invertido">
+  <div class="produto-foto">
+    <img src="images/amburana-page.png" alt="Remedin Amburana" style="object-position: center 5%;">
+  </div>
+  <div class="produto-info">
+    <svg class="emblema-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="30" r="28" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="30" y="35" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#1a1a1a">R</text>
+    </svg>
+    <div class="produto-tipo">Cachaça Premium · Amburana · 38% v/v</div>
+    <h2 class="produto-nome">AMBURANA</h2>
+    <p class="produto-desc">Aromática, envolvente e cheia de brasilidade. Conhecida como o "pau doce" da cachaça, a Amburana entrega notas marcantes de especiarias doces, baunilha e canela. Uma cachaça perfumada e perfeita para quem gosta de bebidas com personalidade.</p>
+    <div class="sensorial">
+      <div class="sensorial-item"><span class="sensorial-label">Madeira</span><span class="sensorial-valor">Amburana — madeira brasileira de 1º uso</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Aroma</span><span class="sensorial-valor">Canela, baunilha, especiarias doces, leve castanha</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Sabor</span><span class="sensorial-valor">Macio, adocicado, especiado, final aromático e persistente</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Sobremesas, queijos, carne de porco, presentes</span></div>
+    </div>
+    <div class="preco-titulo">Pessoa Física</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 15,00</td></tr>
+      <tr><td>750 ml</td><td>R$ 110,00</td></tr>
+    </table>
+    <div class="preco-titulo">Pessoa Jurídica</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 9,00</td></tr>
+      <tr><td>200 ml</td><td>R$ 15,00</td></tr>
+      <tr><td>750 ml</td><td>R$ 79,00</td></tr>
+      <tr><td>PET 2 L</td><td>R$ 150,00</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     JATOBÁ-DO-CERRADO
+════════════════════════════════════════ -->
+<div class="page-header"><span>Alambique Remedin</span></div>
+<section class="produto">
+  <div class="produto-foto bottleshot">
+    <img src="images/jatoba.jpg" alt="Remedin Jatobá-do-Cerrado">
+  </div>
+  <div class="produto-info">
+    <svg class="emblema-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="30" r="28" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="30" y="35" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#1a1a1a">R</text>
+    </svg>
+    <div class="produto-tipo">Cachaça Extrapremium · Jatobá-do-Cerrado · 38% v/v</div>
+    <h2 class="produto-nome">JATOBÁ-DO-<br>CERRADO</h2>
+    <p class="produto-desc">A melhor cachaça do Centro-Oeste. Intensa, robusta e conectada ao Cerrado brasileiro. Armazenada em Jatobá-do-Cerrado, madeira nativa de grande personalidade, apresenta corpo, força e complexidade únicos.</p>
+    <div class="sensorial">
+      <div class="sensorial-item"><span class="sensorial-label">Madeira</span><span class="sensorial-valor">Jatobá-do-Cerrado — madeira nativa brasileira</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Aroma</span><span class="sensorial-valor">Madeira intensa, chocolate amargo, frutas vermelhas, especiarias, notas terrosas</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Sabor</span><span class="sensorial-valor">Encorpado, aveludado, marcante, final seco e persistente</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Carnes vermelhas, queijos maturados, charutos, presentes sofisticados</span></div>
+    </div>
+    <div class="premios">
+      <div class="medalha"><img src="images/selos/cupula-da-cachaca.png" alt="Cúpula da Cachaça 2026"><div class="medalha-label">Top 50 Madeiras Brasileiras — Cúpula 2026</div></div>
+      <div class="medalha"><img src="images/selos/mio-goias-grande-ouro-2025.png" alt="Grande Ouro Mió de Goiás 2025"><div class="medalha-label">Grande Ouro — Mió de Goiás 2025</div></div>
+      <div class="medalha"><img src="images/selos/areia-mostra-ouro-2024-b.png" alt="Ouro Areia Mostra 2024"><div class="medalha-label">Ouro — Areia Mostra Cachaça 2024</div></div>
+      <div class="medalha"><img src="images/selos/new-spirits-2026.webp" alt="New Spirits 2026"><div class="medalha-label">Ouro — New Spirits 2026</div></div>
+    </div>
+    <div class="preco-titulo">Pessoa Física</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 15,00</td></tr>
+      <tr><td>750 ml</td><td>R$ 150,00</td></tr>
+    </table>
+    <div class="preco-titulo">Pessoa Jurídica</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 9,00</td></tr>
+      <tr><td>750 ml</td><td>R$ 90,00</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     EXTRA PREMIUM
+════════════════════════════════════════ -->
+<div class="page-header"><span>Alambique Remedin</span></div>
+<section class="produto invertido">
+  <div class="produto-foto bottleshot">
+    <img src="images/extra-premium.jpg" alt="Remedin Extra Premium">
+  </div>
+  <div class="produto-info">
+    <svg class="emblema-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="30" r="28" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="30" y="35" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#1a1a1a">R</text>
+    </svg>
+    <div class="produto-tipo">Cachaça Extrapremium · 4 anos em Carvalho Francês · 38% v/v</div>
+    <h2 class="produto-nome">EXTRA<br>PREMIUM</h2>
+    <p class="produto-desc">Uma cachaça para beber com calma. Envelhecida 4 anos em barril de carvalho francês ex-malte para whisky europeu, apresenta o perfil mais nobre, elegante e persistente da Remedin. Para paladares exigentes.</p>
+    <div class="sensorial">
+      <div class="sensorial-item"><span class="sensorial-label">Madeira</span><span class="sensorial-valor">Carvalho francês ex-malte, envelhecimento prolongado</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Aroma</span><span class="sensorial-valor">Madeira elegante, baunilha, mel, frutas secas, caramelo, toque licoroso</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Sabor</span><span class="sensorial-valor">Complexo, macio, aveludado, final longo e sofisticado</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Presentes especiais, celebrações, degustação pura</span></div>
+    </div>
+    <div class="premios">
+      <div class="medalha"><img src="images/selos/expocachaca-prata-2021.png" alt="Prata Expocachaça 2021"><div class="medalha-label">Prata — Expocachaça 2021</div></div>
+      <div class="medalha"><img src="images/selos/mio-goias-ouro-2025.png" alt="Ouro Mió de Goiás 2025"><div class="medalha-label">Ouro — Mió de Goiás 2025</div></div>
+    </div>
+    <div class="preco-titulo">Pessoa Física</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>750 ml</td><td>R$ 210,00</td></tr>
+    </table>
+    <div class="preco-titulo">Pessoa Jurídica</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>750 ml</td><td>R$ 120,00</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     DEFUMADA
+════════════════════════════════════════ -->
+<div class="page-header"><span>Alambique Remedin</span></div>
+<section class="produto">
+  <div class="produto-foto bottleshot" style="background:#f5f2ee;">
+    <img src="images/defumada.jpg" alt="Remedin Defumada" onerror="this.src='images/jatoba.jpg'">
+  </div>
+  <div class="produto-info">
+    <svg class="emblema-svg" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="#1a1a1a" stroke-width="1.5"/><text x="30" y="35" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#1a1a1a">R</text></svg>
+    <div class="produto-tipo">Cachaça Extrapremium · Blend Carvalho + Jatobá · 38% v/v</div>
+    <h2 class="produto-nome">DEFUMADA</h2>
+    <p class="produto-desc">A primeira cachaça com processo voltado para adicionar notas defumadas à bebida. Com perfil intenso e personalidade marcante, foi criada para quem busca uma experiência sensorial profunda. Perfeita para fogo, carnes e drinks robustos.</p>
+    <div class="sensorial">
+      <div class="sensorial-item"><span class="sensorial-label">Madeira</span><span class="sensorial-valor">Blend de carvalho com Jatobá</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Aroma</span><span class="sensorial-valor">Defumado, madeira tostada, molho barbecue, especiarias, caramelo leve</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Sabor</span><span class="sensorial-valor">Marcante, seco, intenso, final defumado e persistente</span></div>
+      <div class="sensorial-item"><span class="sensorial-label">Ideal</span><span class="sensorial-valor">Churrasco, costela, brisket, charutos, drinks intensos</span></div>
+    </div>
+    <div class="premios">
+      <div class="medalha"><img src="images/selos/areia-mostra-prata-2024-a.png" alt="Prata Areia 2025"><div class="medalha-label">Prata — Areia Mostra 2025</div></div>
+      <div class="medalha"><img src="images/selos/mio-goias-prata-2025.png" alt="Prata Mió Goiás 2026"><div class="medalha-label">Prata — Mió de Goiás 2026</div></div>
+    </div>
+    <div class="preco-titulo">Pessoa Física</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 20,00</td></tr>
+      <tr><td>200 ml</td><td>R$ 75,00</td></tr>
+      <tr><td>750 ml</td><td>R$ 250,00</td></tr>
+    </table>
+    <div class="preco-titulo">Pessoa Jurídica</div>
+    <table class="preco-table">
+      <tr><th>Volume</th><th>Preço</th></tr>
+      <tr><td>50 ml</td><td>R$ 12,00</td></tr>
+      <tr><td>200 ml</td><td>R$ 35,00</td></tr>
+      <tr><td>750 ml</td><td>R$ 150,00</td></tr>
+      <tr><td>PET 2 L</td><td>R$ 300,00</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CASAL CACHACEIRO + GASTROZINHA
+════════════════════════════════════════ -->
+<div class="page-header"><span>Alambique Remedin</span></div>
+<section class="grupo">
+  <div class="grupo-foto">
+    <img src="images/casal-gastrozinha.jpg" alt="Casal Cachaceiro e Gastrozinha">
+  </div>
+  <div class="grupo-info">
+    <div class="section-eyebrow">Marcas do Alambique</div>
+    <h2 class="produto-nome" style="font-size:36px; margin-bottom:28px;">CASAL CACHACEIRO<br>& GASTROZINHA</h2>
+
+    <div style="margin-bottom:32px;">
+      <div class="produto-tipo">Casal Cachaceiro Premium · Carvalho Francês</div>
+      <p class="produto-desc">Especial no sabor e no custo-benefício. 1,5 anos em barril de carvalho francês. Sabores adocicados e sensação aveludada. Maciez e equilíbrio para dose ou drink.</p>
+      <table class="preco-table">
+        <tr><th>Volume</th><th>PF</th><th>PJ</th></tr>
+        <tr><td>50 ml</td><td>R$ 12,00</td><td>—</td></tr>
+        <tr><td>200 ml</td><td>R$ 30,00</td><td>—</td></tr>
+        <tr><td>500 ml</td><td>R$ 60,00</td><td>—</td></tr>
+      </table>
+    </div>
+
+    <div style="margin-bottom:32px;">
+      <div class="produto-tipo">Casal Cachaceiro Blend 4 Madeiras</div>
+      <p class="produto-desc">Criada por um casal e para casais. Blend ideal para um encontro especial. Sabores adocicados, sensação levemente seca e equilíbrio para dose ou drink.</p>
+      <div class="premios" style="margin-bottom:12px;">
+        <div class="medalha"><img src="images/selos/areia-mostra-prata-2024-a.png" alt="Prata Concurso"><div class="medalha-label">Prata — Concurso do Saber</div></div>
+        <div class="medalha"><img src="images/selos/areia-mostra-prata-2024-b.png" alt="Prata Paraíba"><div class="medalha-label">Prata — Concurso da Paraíba</div></div>
+        <div class="medalha"><img src="images/selos/brasil-spirits-cup-bronze-2025.png" alt="Bronze Brasil Spirits Cup"><div class="medalha-label">Bronze — Brasil Spirits Cup</div></div>
+      </div>
+      <table class="preco-table">
+        <tr><th>Volume</th><th>PF</th><th>PJ</th></tr>
+        <tr><td>50 ml</td><td>R$ 12,00</td><td>—</td></tr>
+        <tr><td>200 ml</td><td>R$ 50,00</td><td>—</td></tr>
+        <tr><td>750 ml</td><td>R$ 130,00</td><td>—</td></tr>
+      </table>
+    </div>
+
+    <div>
+      <div class="produto-tipo">Gastrozinha Blend 4 Madeiras · Raquel Amaral (MasterChef)</div>
+      <p class="produto-desc">Primeira cachaça assinada por uma chef de cozinha do Brasil. Raquel Amaral e The Taste assinam este blend maravilhoso — cujo sabor só é possível explicar degustando.</p>
+      <div class="premios" style="margin-bottom:12px;">
+        <div class="medalha"><img src="images/selos/areia-mostra-prata-2024-b.png" alt="Prata Paraíba"><div class="medalha-label">Prata — Concurso da Paraíba</div></div>
+        <div class="medalha"><img src="images/selos/mapa-da-cachaca-2025.png" alt="Mapa da Cachaça 2025"><div class="medalha-label">Mapa da Cachaça 2025</div></div>
+      </div>
+      <table class="preco-table">
+        <tr><th>Volume</th><th>PF</th><th>PJ</th></tr>
+        <tr><td>50 ml</td><td>R$ 15,00</td><td>—</td></tr>
+        <tr><td>200 ml</td><td>R$ 50,00</td><td>—</td></tr>
+        <tr><td>500 ml</td><td>R$ 100,00</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato">
+  <img src="images/logo.png" alt="Remedin">
+  <h2>CONTATO REMEDIN</h2>
+  <p>Queremos ouvir de você! Seja um revendedor, um cliente à procura de um presente ou apenas um entusiasta da Remedin.</p>
+  <br>
+  <p>Instagram: <a href="#">@remedincachaca</a></p>
+  <p>WhatsApp: <a href="#">(61) 9 9996-3612</a></p>
+  <p>E-mail: <a href="#">comercial@remedincachaca.com</a></p>
+  <p style="margin-top:8px;">Site: <a href="#">www.remedincachaca.com.br</a></p>
+  <p style="margin-top:32px; font-size:11px; color:#666; letter-spacing:1px;">CATÁLOGO 2026 · ALAMBIQUE REMEDIN · BRASÍLIA · DF</p>
+</section>
+
+</body>
+</html>
