@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNA Artesanal — Marketplace de Produtos Artesanais do Brasil</title>
+<style>
+  :root {
+    --verde:    #1B7340;
+    --verde-escuro: #145530;
+    --verde-claro: #e8f5ee;
+    --ouro:     #C8971A;
+    --ouro-claro: #fdf5e0;
+    --cinza-1:  #f7f7f5;
+    --cinza-2:  #eeecea;
+    --cinza-3:  #9e9e9e;
+    --texto:    #1c1c1c;
+    --borda:    #e0ddd8;
+    --branco:   #ffffff;
+    --perigo:   #c0392b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--cinza-1);
+    color: var(--texto);
+    min-height: 100vh;
+  }
+
+  /* ── TOPO ── */
+  .topbar {
+    background: var(--verde-escuro);
+    color: #d4eadc;
+    font-size: 12px;
+    padding: 6px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    letter-spacing: 0.3px;
+  }
+  .topbar a { color: #a8d8b8; text-decoration: none; }
+  .topbar .langs { display: flex; gap: 12px; }
+  .topbar .lang-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #d4eadc;
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .topbar .lang-btn.ativo { background: rgba(255,255,255,0.2); }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--branco);
+    border-bottom: 1px solid var(--borda);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .logo-badge {
+    width: 44px;
+    height: 44px;
+    background: var(--verde);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: -1px;
+    font-family: 'Arial Black', sans-serif;
+  }
+  .logo-text { line-height: 1.15; }
+  .logo-text strong { display: block; font-size: 15px; color: var(--verde-escuro); font-weight: 800; }
+  .logo-text span   { display: block; font-size: 10px; color: var(--cinza-3); letter-spacing: 1.5px; text-transform: uppercase; }
+
+  .search-bar {
+    flex: 1;
+    max-width: 560px;
+    position: relative;
+  }
+  .search-bar input {
+    width: 100%;
+    padding: 10px 16px 10px 42px;
+    border: 1.5px solid var(--borda);
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--cinza-1);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .search-bar input:focus { border-color: var(--verde); background: #fff; }
+  .search-bar svg {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cinza-3);
+  }
+
+  .header-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+
+  .btn-entrar {
+    padding: 9px 18px;
+    border: 1.5px solid var(--verde);
+    color: var(--verde);
+    background: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .18s, color .18s;
+  }
+  .btn-entrar:hover { background: var(--verde-claro); }
+
+  .btn-vender {
+    padding: 9px 18px;
+    background: var(--ouro);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .18s;
+  }
+  .btn-vender:hover { background: #b5840f; }
+
+  .btn-carrinho {
+    position: relative;
+    background: var(--verde);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    width: 44px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background .18s;
+  }
+  .btn-carrinho:hover { background: var(--verde-escuro); }
+  .carrinho-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: var(--ouro);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+  }
+
+  /* ── NAV CATEGORIAS ── */
+  .cat-nav {
+    background: var(--branco);
+    border-bottom: 1px solid var(--borda);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cat-nav::-webkit-scrollbar { display: none; }
+  .cat-nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 0;
+  }
+  .cat-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 18px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #555;
+    font-size: 12px;
+    border-bottom: 2px solid transparent;
+    transition: color .18s, border-color .18s;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .cat-btn .cat-icon { font-size: 20px; }
+  .cat-btn:hover { color: var(--verde); }
+  .cat-btn.ativa { color: var(--verde); border-bottom-color: var(--verde); font-weight: 700; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--verde-escuro) 0%, var(--verde) 60%, #2d9e5c 100%);
+    color: #fff;
+    padding: 56px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-inner { position: relative; max-width: 760px; margin: 0 auto; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 42px; font-weight: 900; line-height: 1.1; margin-bottom: 14px; font-family: 'Arial Black', Georgia, sans-serif; }
+  .hero h1 span { color: #f9d86a; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,0.85); margin-bottom: 28px; line-height: 1.6; }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-stat strong { display: block; font-size: 28px; font-weight: 900; color: #f9d86a; }
+  .hero-stat span   { font-size: 12px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ── FILTROS E GRID ── */
+  .main-area {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .toolbar-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .filtro-label { font-size: 13px; color: var(--cinza-3); font-weight: 500; }
+
+  .filtro-grupo {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .filtro-btn {
+    padding: 6px 14px;
+    border: 1.5px solid var(--borda);
+    border-radius: 20px;
+    background: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .18s;
+    color: #555;
+    font-weight: 500;
+  }
+  .filtro-btn:hover { border-color: var(--verde); color: var(--verde); }
+  .filtro-btn.ativo { background: var(--verde); color: #fff; border-color: var(--verde); }
+
+  .select-ordenar {
+    padding: 7px 12px;
+    border: 1.5px solid var(--borda);
+    border-radius: 8px;
+    font-size: 13px;
+    background: #fff;
+    cursor: pointer;
+    outline: none;
+    color: #444;
+  }
+
+  .resultado-info {
+    font-size: 13px;
+    color: var(--cinza-3);
+  }
+  .resultado-info strong { color: var(--texto); }
+
+  /* ── GRID DE PRODUTOS ── */
+  .produtos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid var(--borda);
+    overflow: hidden;
+    transition: box-shadow .2s, transform .2s;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  .card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.1); transform: translateY(-2px); }
+
+  .card-img {
+    height: 190px;
+    background: var(--cinza-2);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+  }
+  .card-img .selo-destaque {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--ouro);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .card-img .selo-envio {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--verde);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .card-img .selo-novo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #e74c3c;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .card-body { padding: 14px 16px; flex: 1; display: flex; flex-direction: column; }
+  .card-origem {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--verde);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .card-nome { font-size: 15px; font-weight: 700; color: var(--texto); margin-bottom: 3px; line-height: 1.3; }
+  .card-produtor { font-size: 12px; color: var(--cinza-3); margin-bottom: 10px; }
+
+  .card-avaliacao {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  .estrelas { color: #f0b429; letter-spacing: 1px; }
+  .avaliacao-num { color: var(--cinza-3); }
+
+  .card-footer { margin-top: auto; }
+  .card-preco {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .preco-principal { font-size: 22px; font-weight: 900; color: var(--texto); }
+  .preco-unidade { font-size: 12px; color: var(--cinza-3); padding-bottom: 2px; }
+  .preco-de { font-size: 12px; color: var(--cinza-3); text-decoration: line-through; padding-bottom: 3px; }
+
+  .card-volume-sel {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1.5px solid var(--borda);
+    border-radius: 6px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    background: var(--cinza-1);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .btn-add {
+    width: 100%;
+    padding: 10px;
+    background: var(--verde);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .18s;
+    letter-spacing: 0.3px;
+  }
+  .btn-add:hover { background: var(--verde-escuro); }
+  .btn-add:active { transform: scale(0.98); }
+
+  /* ── CARRINHO LATERAL ── */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s;
+  }
+  .overlay.visivel { opacity: 1; pointer-events: all; }
+
+  .carrinho-panel {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 400px;
+    max-width: 100vw;
+    background: #fff;
+    z-index: 201;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+  }
+  .carrinho-panel.aberto { transform: translateX(0); }
+
+  .carrinho-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--borda);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .carrinho-header h2 { font-size: 18px; font-weight: 800; }
+  .btn-fechar {
+    background: var(--cinza-2);
+    border: none;
+    border-radius: 8px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+    transition: background .15s;
+  }
+  .btn-fechar:hover { background: var(--borda); }
+
+  .carrinho-itens {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 24px;
+  }
+  .carrinho-vazio {
+    text-align: center;
+    padding: 60px 0;
+    color: var(--cinza-3);
+  }
+  .carrinho-vazio .empty-icon { font-size: 56px; margin-bottom: 12px; }
+  .carrinho-vazio p { font-size: 14px; }
+
+  .item-carrinho {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--borda);
+  }
+  .item-carrinho:last-child { border-bottom: none; }
+  .item-emoji { font-size: 32px; flex-shrink: 0; }
+  .item-info { flex: 1; }
+  .item-nome { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .item-detalhe { font-size: 11px; color: var(--cinza-3); margin-bottom: 6px; }
+  .item-qtd-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .qtd-btn {
+    width: 26px;
+    height: 26px;
+    border: 1.5px solid var(--borda);
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s;
+    color: #444;
+  }
+  .qtd-btn:hover { background: var(--verde-claro); border-color: var(--verde); color: var(--verde); }
+  .qtd-num { font-size: 14px; font-weight: 700; min-width: 20px; text-align: center; }
+  .item-preco { font-size: 14px; font-weight: 800; color: var(--verde-escuro); white-space: nowrap; }
+  .btn-remover { background: none; border: none; cursor: pointer; color: #bbb; font-size: 15px; padding: 2px; transition: color .15s; }
+  .btn-remover:hover { color: var(--perigo); }
+
+  .carrinho-footer {
+    padding: 20px 24px;
+    border-top: 1px solid var(--borda);
+    background: var(--cinza-1);
+  }
+  .subtotal-linha {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--cinza-3);
+    margin-bottom: 6px;
+  }
+  .total-linha {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--texto);
+    margin: 12px 0;
+  }
+  .frete-info {
+    font-size: 11px;
+    color: var(--verde);
+    text-align: center;
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .btn-fechar-pedido {
+    width: 100%;
+    padding: 14px;
+    background: #25D366;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background .18s;
+    letter-spacing: 0.3px;
+  }
+  .btn-fechar-pedido:hover { background: #1ebe57; }
+
+  /* ── SEÇÃO REGIÕES ── */
+  .regioes-section {
+    background: var(--verde-claro);
+    padding: 40px 24px;
+    border-top: 1px solid #c6e0d0;
+    border-bottom: 1px solid #c6e0d0;
+    margin-bottom: 32px;
+  }
+  .regioes-inner { max-width: 1280px; margin: 0 auto; }
+  .regioes-section h3 { font-size: 20px; font-weight: 800; margin-bottom: 20px; color: var(--verde-escuro); }
+  .regioes-grid {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .regiao-btn {
+    padding: 10px 20px;
+    border: 1.5px solid #b8d8c4;
+    border-radius: 24px;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all .18s;
+    color: var(--verde-escuro);
+  }
+  .regiao-btn:hover, .regiao-btn.ativo { background: var(--verde); color: #fff; border-color: var(--verde); }
+  .regiao-btn .flag { font-size: 18px; }
+  .regiao-estado { font-size: 10px; opacity: 0.7; }
+
+  /* ── BANNER VENDEDOR ── */
+  .banner-vendedor {
+    background: linear-gradient(135deg, #1B7340 0%, #2d9e5c 100%);
+    border-radius: 16px;
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+  }
+  .banner-vendedor-text h3 { font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 8px; }
+  .banner-vendedor-text p { font-size: 14px; color: rgba(255,255,255,0.8); max-width: 480px; line-height: 1.6; }
+  .btn-cadastrar {
+    padding: 14px 28px;
+    background: #fff;
+    color: var(--verde-escuro);
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform .15s;
+  }
+  .btn-cadastrar:hover { transform: scale(1.03); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1a1a1a;
+    color: #ccc;
+    padding: 48px 24px 28px;
+    margin-top: 40px;
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  .footer-col h4 { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 14px; letter-spacing: 0.5px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 8px; }
+  .footer-col ul li a { color: #aaa; text-decoration: none; font-size: 13px; transition: color .15s; }
+  .footer-col ul li a:hover { color: #fff; }
+  .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .footer-logo-badge {
+    width: 40px; height: 40px;
+    background: var(--verde);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 16px; color: #fff;
+    font-family: 'Arial Black', sans-serif;
+  }
+  .footer-logo-text strong { display: block; font-size: 14px; color: #fff; font-weight: 800; }
+  .footer-logo-text span { font-size: 10px; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+  .footer-desc { font-size: 13px; color: #888; line-height: 1.7; margin-top: 4px; }
+  .footer-selos {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-selo {
+    background: #2a2a2a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 10px;
+    color: #aaa;
+    letter-spacing: 0.5px;
+  }
+  .footer-bottom {
+    border-top: 1px solid #2a2a2a;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+    color: #666;
+  }
+  .footer-bottom a { color: #888; text-decoration: none; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--verde-escuro);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 500;
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .toast.visivel { transform: translateX(-50%) translateY(0); }
+
+  /* ── RESPONSIVO ── */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 28px; }
+    .hero-stats { gap: 24px; }
+    .hero-stat strong { font-size: 22px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .header-inner { gap: 12px; }
+    .btn-vender, .btn-entrar { display: none; }
+    .banner-vendedor { padding: 24px; }
+    .topbar { padding: 6px 16px; font-size: 11px; }
+  }
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .carrinho-panel { width: 100vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>🌿 O maior marketplace de produtos artesanais do Brasil — CNA &amp; Sebrae</span>
+  <div class="langs">
+    <button class="lang-btn ativo" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('es')">ES</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-badge">CNA</div>
+      <div class="logo-text">
+        <strong>Artesanal Brasil</strong>
+        <span>Confederação Nacional de Agricultura</span>
+      </div>
+    </a>
+    <div class="search-bar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Buscar produtos, produtores, regiões..." oninput="filtrarBusca(this.value)">
+    </div>
+    <div class="header-actions">
+      <button class="btn-entrar">Entrar</button>
+      <button class="btn-vender" onclick="alert('Cadastro de produtores em breve!')">Vender aqui</button>
+      <button class="btn-carrinho" onclick="toggleCarrinho()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="carrinho-badge" id="carrinho-badge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV CATEGORIAS -->
+<nav class="cat-nav">
+  <div class="cat-nav-inner">
+    <button class="cat-btn ativa" onclick="filtrarCategoria('todos', this)"><span class="cat-icon">🛒</span>Todos</button>
+    <button class="cat-btn" onclick="filtrarCategoria('cachaca', this)"><span class="cat-icon">🥃</span>Cachaças</button>
+    <button class="cat-btn" onclick="filtrarCategoria('queijo', this)"><span class="cat-icon">🧀</span>Queijos</button>
+    <button class="cat-btn" onclick="filtrarCategoria('mel', this)"><span class="cat-icon">🍯</span>Mel &amp; Apicultura</button>
+    <button class="cat-btn" onclick="filtrarCategoria('cafe', this)"><span class="cat-icon">☕</span>Café Especial</button>
+    <button class="cat-btn" onclick="filtrarCategoria('embutido', this)"><span class="cat-icon">🌭</span>Embutidos</button>
+    <button class="cat-btn" onclick="filtrarCategoria('conserva', this)"><span class="cat-icon">🫙</span>Conservas &amp; Geleias</button>
+    <button class="cat-btn" onclick="filtrarCategoria('azeite', this)"><span class="cat-icon">🫒</span>Azeites &amp; Óleos</button>
+    <button class="cat-btn" onclick="filtrarCategoria('vinho', this)"><span class="cat-icon">🍷</span>Vinhos Artesanais</button>
+    <button class="cat-btn" onclick="filtrarCategoria('artesanato', this)"><span class="cat-icon">🏺</span>Artesanato</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">🇧🇷 Produto Artesanal Brasileiro</div>
+    <h1>O Brasil que produz<br><span>direto pra sua mesa</span></h1>
+    <p>Conectamos produtores rurais e artesanais de todo o Brasil com consumidores no país e no mundo. Autêntico, rastreável e com selo de qualidade CNA.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>12.400+</strong><span>Produtores</span></div>
+      <div class="hero-stat"><strong>27</strong><span>Estados</span></div>
+      <div class="hero-stat"><strong>85+</strong><span>Países atendidos</span></div>
+      <div class="hero-stat"><strong>340k+</strong><span>Pedidos entregues</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTRO POR REGIÃO -->
+<div class="regioes-section">
+  <div class="regioes-inner">
+    <h3>Explorar por Região</h3>
+    <div class="regioes-grid">
+      <button class="regiao-btn ativo" onclick="filtrarRegiao('todos', this)"><span class="flag">🗺️</span> Todo o Brasil</button>
+      <button class="regiao-btn" onclick="filtrarRegiao('norte', this)"><span class="flag">🌿</span> Norte <span class="regiao-estado">AM · PA · AC · RR · AP · RO · TO</span></button>
+      <button class="regiao-btn" onclick="filtrarRegiao('nordeste', this)"><span class="flag">☀️</span> Nordeste <span class="regiao-estado">BA · CE · PE · MA · PB · RN · SE · AL · PI</span></button>
+      <button class="regiao-btn" onclick="filtrarRegiao('centro-oeste', this)"><span class="flag">🌾</span> Centro-Oeste <span class="regiao-estado">DF · GO · MT · MS</span></button>
+      <button class="regiao-btn" onclick="filtrarRegiao('sudeste', this)"><span class="flag">🏙️</span> Sudeste <span class="regiao-estado">SP · RJ · MG · ES</span></button>
+      <button class="regiao-btn" onclick="filtrarRegiao('sul', this)"><span class="flag">🍷</span> Sul <span class="regiao-estado">RS · SC · PR</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ÁREA PRINCIPAL -->
+<div class="main-area">
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <span class="filtro-label">Filtrar:</span>
+      <div class="filtro-grupo">
+        <button class="filtro-btn ativo" onclick="filtrarNivel('todos', this)">Todos</button>
+        <button class="filtro-btn" onclick="filtrarNivel('premiado', this)">🏆 Premiados</button>
+        <button class="filtro-btn" onclick="filtrarNivel('exportacao', this)">✈️ Disponível p/ Exportação</button>
+        <button class="filtro-btn" onclick="filtrarNivel('organico', this)">🌱 Orgânicos</button>
+        <button class="filtro-btn" onclick="filtrarNivel('indicacao', this)">📍 Indicação Geográfica</button>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <span class="resultado-info" id="resultado-info"><strong>28</strong> produtos encontrados</span>
+      <select class="select-ordenar" onchange="ordenar(this.value)">
+        <option value="relevancia">Ordenar: Relevância</option>
+        <option value="menor-preco">Menor preço</option>
+        <option value="maior-preco">Maior preço</option>
+        <option value="avaliacao">Melhor avaliação</option>
+        <option value="novo">Mais recentes</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="produtos-grid" id="produtos-grid">
+    <!-- Produtos inseridos via JS -->
+  </div>
+
+  <!-- BANNER VENDEDOR -->
+  <div class="banner-vendedor">
+    <div class="banner-vendedor-text">
+      <h3>Você produz? Venda para o Brasil e para o mundo.</h3>
+      <p>Cadastre-se como produtor no marketplace da CNA e acesse uma rede de mais de 2 milhões de compradores nacionais e internacionais. Sem taxa de adesão. Suporte técnico gratuito. Logística integrada.</p>
+    </div>
+    <button class="btn-cadastrar" onclick="alert('Em breve! Cadastro de produtores disponível.')">Cadastrar como Produtor →</button>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-logo">
+          <div class="footer-logo-badge">CNA</div>
+          <div class="footer-logo-text">
+            <strong>Artesanal Brasil</strong>
+            <span>Marketplace Oficial</span>
+          </div>
+        </div>
+        <p class="footer-desc">O marketplace oficial da Confederação Nacional de Agricultura e Pecuária do Brasil para produtos artesanais — com rastreabilidade, qualidade certificada e logística para o mundo.</p>
+        <div class="footer-selos">
+          <span class="footer-selo">🔒 Compra Segura</span>
+          <span class="footer-selo">✈️ Frete Internacional</span>
+          <span class="footer-selo">🌱 Sustentável</span>
+          <span class="footer-selo">📜 Certificado CNA</span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Marketplace</h4>
+        <ul>
+          <li><a href="#">Como funciona</a></li>
+          <li><a href="#">Cadastrar produto</a></li>
+          <li><a href="#">Central do produtor</a></li>
+          <li><a href="#">Programa de certificação</a></li>
+          <li><a href="#">Exportação</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Suporte</h4>
+        <ul>
+          <li><a href="#">Central de ajuda</a></li>
+          <li><a href="#">Rastrear pedido</a></li>
+          <li><a href="#">Política de devolução</a></li>
+          <li><a href="#">Frete e prazos</a></li>
+          <li><a href="#">Fale conosco</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>CNA</h4>
+        <ul>
+          <li><a href="#">Sobre a CNA</a></li>
+          <li><a href="#">Programas rurais</a></li>
+          <li><a href="#">Agronegócio</a></li>
+          <li><a href="#">Imprensa</a></li>
+          <li><a href="#">Trabalhe conosco</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CNA — Artesanal Brasil. Todos os direitos reservados.</span>
+      <span><a href="#">Privacidade</a> · <a href="#">Termos de uso</a> · <a href="#">LGPD</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- OVERLAY + CARRINHO -->
+<div class="overlay" id="overlay" onclick="fecharCarrinho()"></div>
+<div class="carrinho-panel" id="carrinho-panel">
+  <div class="carrinho-header">
+    <h2>🛒 Seu carrinho</h2>
+    <button class="btn-fechar" onclick="fecharCarrinho()">✕</button>
+  </div>
+  <div class="carrinho-itens" id="carrinho-itens">
+    <div class="carrinho-vazio">
+      <div class="empty-icon">🛍️</div>
+      <p>Seu carrinho está vazio.<br>Explore nossos produtos artesanais!</p>
+    </div>
+  </div>
+  <div class="carrinho-footer" id="carrinho-footer" style="display:none">
+    <div class="subtotal-linha"><span>Subtotal</span><span id="subtotal-val">R$ 0,00</span></div>
+    <div class="subtotal-linha"><span>Frete</span><span>A calcular</span></div>
+    <div class="total-linha"><span>Total</span><span id="total-val">R$ 0,00</span></div>
+    <p class="frete-info">✈️ Frete internacional disponível · Entrega em todo o Brasil</p>
+    <button class="btn-fechar-pedido" onclick="finalizarWhatsApp()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Finalizar pelo WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DADOS DOS PRODUTOS ──────────────────────────────────────────────────
+const produtos = [
+  {
+    id: 1,
+    nome: 'Cachaça Jatobá-do-Cerrado',
+    produtor: 'Alambique Remedin',
+    origem: 'Brasília · DF',
+    regiao: 'centro-oeste',
+    categoria: 'cachaca',
+    emoji: '🥃',
+    avaliacao: 4.9,
+    total_av: 312,
+    precos: { '50 ml': 15, '750 ml': 150 },
+    destaque: 'Grande Ouro 2025',
+    exportacao: true,
+    premiado: true,
+    organico: false,
+    indicacao: false,
+  },
+  {
+    id: 2,
+    nome: 'Queijo Canastra Meia Cura',
+    produtor: 'Sítio Serra da Canastra',
+    origem: 'São Roque de Minas · MG',
+    regiao: 'sudeste',
+    categoria: 'queijo',
+    emoji: '🧀',
+    avaliacao: 4.8,
+    total_av: 547,
+    precos: { '400 g': 48, '1 kg': 110, '2 kg': 200 },
+    destaque: null,
+    exportacao: true,
+    premiado: true,
+    organico: false,
+    indicacao: true,
+  },
+  {
+    id: 3,
+    nome: 'Mel Silvestre do Cerrado',
+    produtor: 'Apicultura Cerrado Vivo',
+    origem: 'Planaltina · GO',
+    regiao: 'centro-oeste',
+    categoria: 'mel',
+    emoji: '🍯',
+    avaliacao: 4.7,
+    total_av: 189,
+    precos: { '250 g': 28, '500 g': 52, '1 kg': 98 },
+    destaque: null,
+    exportacao: true,
+    premiado: false,
+    organico: true,
+    indicacao: false,
+  },
+  {
+    id: 4,
+    nome: 'Café Especial Montanha Verde',
+    produtor: 'Família Brescia',
+    origem: 'Pedra Azul · ES',
+    regiao: 'sudeste',
+    categoria: 'cafe',
+    emoji: '☕',
+    avaliacao: 4.9,
+    total_av: 428,
+    precos: { '250 g': 42, '500 g': 79, '1 kg': 145 },
+    destaque: 'Specialty 88+',
+    exportacao: true,
+    premiado: true,
+    organico: true,
+    indicacao: false,
+  },
+  {
+    id: 5,
+    nome: 'Linguiça Blumenau Defumada',
+    produtor: 'Charcutaria Haus',
+    origem: 'Blumenau · SC',
+    regiao: 'sul',
+    categoria: 'embutido',
+    emoji: '🌭',
+    avaliacao: 4.6,
+    total_av: 203,
+    precos: { '300 g': 32, '600 g': 58, '1 kg': 89 },
+    destaque: null,
+    exportacao: false,
+    premiado: false,
+    organico: false,
+    indicacao: true,
+  },
+  {
+    id: 6,
+    nome: 'Vinho Serra Gaúcha Reserva',
+    produtor: 'Vinícola Collina Alta',
+    origem: 'Bento Gonçalves · RS',
+    regiao: 'sul',
+    categoria: 'vinho',
+    emoji: '🍷',
+    avaliacao: 4.8,
+    total_av: 367,
+    precos: { '750 ml': 89, 'Caixa 6un': 490 },
+    destaque: 'Ouro Vinitaly',
+    exportacao: true,
+    premiado: true,
+    organico: false,
+    indicacao: true,
+  },
+  {
+    id: 7,
+    nome: 'Geleia de Umbu com Caju',
+    produtor: 'Sabores do Sertão',
+    origem: 'Petrolina · PE',
+    regiao: 'nordeste',
+    categoria: 'conserva',
+    emoji: '🫙',
+    avaliacao: 4.7,
+    total_av: 142,
+    precos: { '220 g': 22, '440 g': 40 },
+    destaque: 'Novo',
+    exportacao: true,
+    premiado: false,
+    organico: true,
+    indicacao: false,
+  },
+  {
+    id: 8,
+    nome: 'Azeite Extra Virgem Paulista',
+    produtor: 'Oliveiras do Vale',
+    origem: 'São Roque · SP',
+    regiao: 'sudeste',
+    categoria: 'azeite',
+    emoji: '🫒',
+    avaliacao: 4.9,
+    total_av: 215,
+    precos: { '250 ml': 55, '500 ml': 98 },
+    destaque: 'Premium',
+    exportacao: true,
+    premiado: true,
+    organico: false,
+    indicacao: false,
+  },
+  {
+    id: 9,
+    nome: 'Cerâmica Marajoara',
+    produtor: 'Artesãos da Ilha',
+    origem: 'Marajó · PA',
+    regiao: 'norte',
+    categoria: 'artesanato',
+    emoji: '🏺',
+    avaliacao: 5.0,
+    total_av: 87,
+    precos: { 'Peça média': 180, 'Peça grande': 320 },
+    destaque: null,
+    exportacao: true,
+    premiado: false,
+    organico: false,
+    indicacao: true,
+  },
+  {
+    id: 10,
+    nome: 'Cachaça Amburana Artesanal',
+    produtor: 'Alambique São João',
+    origem: 'Salinas · MG',
+    regiao: 'sudeste',
+    categoria: 'cachaca',
+    emoji: '🥃',
+    avaliacao: 4.8,
+    total_av: 291,
+    precos: { '50 ml': 18, '750 ml': 130 },
+    destaque: null,
+    exportacao: true,
+    premiado: true,
+    organico: false,
+    indicacao: false,
+  },
+  {
+    id: 11,
+    nome: 'Mel de Abelha Jandaíra',
+    produtor: 'Meliponicultores do Seridó',
+    origem: 'Caicó · RN',
+    regiao: 'nordeste',
+    categoria: 'mel',
+    emoji: '🍯',
+    avaliacao: 4.9,
+    total_av: 98,
+    precos: { '100 ml': 35, '250 ml': 80 },
+    destaque: 'Raro',
+    exportacao: true,
+    premiado: false,
+    organico: true,
+    indicacao: false,
+  },
+  {
+    id: 12,
+    nome: 'Queijo Colonial Serrano',
+    produtor: 'Queijaria Serra Verde',
+    origem: 'Lages · SC',
+    regiao: 'sul',
+    categoria: 'queijo',
+    emoji: '🧀',
+    avaliacao: 4.6,
+    total_av: 174,
+    precos: { '500 g': 42, '1 kg': 78 },
+    destaque: null,
+    exportacao: false,
+    premiado: false,
+    organico: false,
+    indicacao: true,
+  },
+  {
+    id: 13,
+    nome: 'Pimenta Biquinho em Conserva',
+    produtor: 'Casa das Pimentas',
+    origem: 'Minas Novas · MG',
+    regiao: 'sudeste',
+    categoria: 'conserva',
+    emoji: '🫙',
+    avaliacao: 4.7,
+    total_av: 256,
+    precos: { '200 g': 18, '500 g': 38, '1 kg': 68 },
+    destaque: null,
+    exportacao: true,
+    premiado: false,
+    organico: false,
+    indicacao: false,
+  },
+  {
+    id: 14,
+    nome: 'Cerveja Artesanal Weizen',
+    produtor: 'Cervejaria Alto Piquiri',
+    origem: 'Toledo · PR',
+    regiao: 'sul',
+    categoria: 'vinho',
+    emoji: '🍺',
+    avaliacao: 4.5,
+    total_av: 143,
+    precos: { '600 ml (un)': 18, 'Caixa 12un': 198 },
+    destaque: 'Novo',
+    exportacao: false,
+    premiado: false,
+    organico: false,
+    indicacao: false,
+  },
+  {
+    id: 15,
+    nome: 'Café do Cerrado Mineiro',
+    produtor: 'Fazenda Rio Preto',
+    origem: 'Patrocínio · MG',
+    regiao: 'sudeste',
+    categoria: 'cafe',
+    emoji: '☕',
+    avaliacao: 4.8,
+    total_av: 388,
+    precos: { '250 g': 38, '500 g': 70 },
+    destaque: null,
+    exportacao: true,
+    premiado: true,
+    organico: false,
+    indicacao: true,
+  },
+  {
+    id: 16,
+    nome: 'Rendas de Bilro Cearenses',
+    produtor: 'Rendeiras de Aquiraz',
+    origem: 'Aquiraz · CE',
+    regiao: 'nordeste',
+    categoria: 'artesanato',
+    emoji: '🧵',
+    avaliacao: 5.0,
+    total_av: 62,
+    precos: { 'Caminho de mesa': 120, 'Toalha de jantar': 280 },
+    destaque: 'IG Reconhecida',
+    exportacao: true,
+    premiado: false,
+    organico: false,
+    indicacao: true,
+  },
+];
+
+// ── ESTADO ──────────────────────────────────────────────────────────────
+let carrinho = [];
+let filtroCategoria = 'todos';
+let filtroRegiao = 'todos';
+let filtroNivel = 'todos';
+let termoBusca = '';
+
+// ── RENDERIZAÇÃO DOS CARDS ───────────────────────────────────────────────
+function renderizarProdutos() {
+  const grid = document.getElementById('produtos-grid');
+  const visiveis = produtos.filter(p => {
+    if (filtroCategoria !== 'todos' && p.categoria !== filtroCategoria) return false;
+    if (filtroRegiao !== 'todos' && p.regiao !== filtroRegiao) return false;
+    if (filtroNivel === 'premiado' && !p.premiado) return false;
+    if (filtroNivel === 'exportacao' && !p.exportacao) return false;
+    if (filtroNivel === 'organico' && !p.organico) return false;
+    if (filtroNivel === 'indicacao' && !p.indicacao) return false;
+    if (termoBusca && !p.nome.toLowerCase().includes(termoBusca) && !p.produtor.toLowerCase().includes(termoBusca) && !p.origem.toLowerCase().includes(termoBusca)) return false;
+    return true;
+  });
+
+  document.getElementById('resultado-info').innerHTML = `<strong>${visiveis.length}</strong> produto${visiveis.length !== 1 ? 's' : ''} encontrado${visiveis.length !== 1 ? 's' : ''}`;
+
+  grid.innerHTML = visiveis.map(p => {
+    const volumes = Object.keys(p.precos);
+    const primeiroPreco = p.precos[volumes[0]];
+    const opcoesVolume = volumes.map(v => `<option value="${v}">${v} — R$ ${p.precos[v].toFixed(2).replace('.', ',')}</option>`).join('');
+
+    const seloDestaque = p.destaque ? `<span class="selo-destaque">🏆 ${p.destaque}</span>` : '';
+    const seloEnvio = p.exportacao ? `<span class="selo-envio">✈️ Exportação</span>` : '';
+
+    const estrelas = '★'.repeat(Math.floor(p.avaliacao)) + (p.avaliacao % 1 >= 0.5 ? '½' : '');
+
+    return `
+    <div class="card" data-id="${p.id}">
+      <div class="card-img">
+        ${p.emoji}
+        ${seloDestaque}
+        ${seloEnvio}
+      </div>
+      <div class="card-body">
+        <div class="card-origem">📍 ${p.origem}</div>
+        <div class="card-nome">${p.nome}</div>
+        <div class="card-produtor">${p.produtor}</div>
+        <div class="card-avaliacao">
+          <span class="estrelas">${estrelas.replace('½','⭐')}</span>
+          <span class="avaliacao-num">${p.avaliacao.toFixed(1)} (${p.total_av})</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-preco">
+            <span class="preco-principal">R$ ${primeiroPreco.toFixed(2).replace('.', ',')}</span>
+            <span class="preco-unidade">${volumes[0]}</span>
+          </div>
+          ${volumes.length > 1 ? `<select class="card-volume-sel" id="vol-${p.id}">${opcoesVolume}</select>` : `<input type="hidden" id="vol-${p.id}" value="${volumes[0]}">`}
+          <button class="btn-add" onclick="adicionarAoCarrinho(${p.id})">+ Adicionar ao carrinho</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── CARRINHO ─────────────────────────────────────────────────────────────
+function adicionarAoCarrinho(id) {
+  const prod = produtos.find(p => p.id === id);
+  const volEl = document.getElementById('vol-' + id);
+  const volume = volEl.value || Object.keys(prod.precos)[0];
+  const preco = prod.precos[volume];
+
+  const idx = carrinho.findIndex(i => i.id === id && i.volume === volume);
+  if (idx >= 0) {
+    carrinho[idx].qtd++;
+  } else {
+    carrinho.push({ id, nome: prod.nome, emoji: prod.emoji, produtor: prod.produtor, volume, preco, qtd: 1 });
+  }
+  atualizarCarrinho();
+  mostrarToast(`${prod.emoji} ${prod.nome} adicionado!`);
+}
+
+function alterarQtd(id, volume, delta) {
+  const idx = carrinho.findIndex(i => i.id === id && i.volume === volume);
+  if (idx < 0) return;
+  carrinho[idx].qtd += delta;
+  if (carrinho[idx].qtd <= 0) carrinho.splice(idx, 1);
+  atualizarCarrinho();
+  renderizarPainel();
+}
+
+function removerItem(id, volume) {
+  carrinho = carrinho.filter(i => !(i.id === id && i.volume === volume));
+  atualizarCarrinho();
+  renderizarPainel();
+}
+
+function atualizarCarrinho() {
+  const total = carrinho.reduce((s, i) => s + i.qtd, 0);
+  const badge = document.getElementById('carrinho-badge');
+  badge.textContent = total;
+  badge.style.display = total > 0 ? 'flex' : 'none';
+  renderizarPainel();
+}
+
+function renderizarPainel() {
+  const el = document.getElementById('carrinho-itens');
+  const footer = document.getElementById('carrinho-footer');
+  if (carrinho.length === 0) {
+    el.innerHTML = `<div class="carrinho-vazio"><div class="empty-icon">🛍️</div><p>Seu carrinho está vazio.<br>Explore nossos produtos artesanais!</p></div>`;
+    footer.style.display = 'none';
+    return;
+  }
+  footer.style.display = '';
+  el.innerHTML = carrinho.map(item => `
+    <div class="item-carrinho">
+      <div class="item-emoji">${item.emoji}</div>
+      <div class="item-info">
+        <div class="item-nome">${item.nome}</div>
+        <div class="item-detalhe">${item.volume} · ${item.produtor}</div>
+        <div class="item-qtd-ctrl">
+          <button class="qtd-btn" onclick="alterarQtd(${item.id},'${item.volume}',-1)">−</button>
+          <span class="qtd-num">${item.qtd}</span>
+          <button class="qtd-btn" onclick="alterarQtd(${item.id},'${item.volume}',1)">+</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+        <button class="btn-remover" onclick="removerItem(${item.id},'${item.volume}')">✕</button>
+        <span class="item-preco">R$ ${(item.preco * item.qtd).toFixed(2).replace('.', ',')}</span>
+      </div>
+    </div>
+  `).join('');
+
+  const total = carrinho.reduce((s, i) => s + i.preco * i.qtd, 0);
+  document.getElementById('subtotal-val').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+  document.getElementById('total-val').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+}
+
+function toggleCarrinho() {
+  const panel = document.getElementById('carrinho-panel');
+  const overlay = document.getElementById('overlay');
+  panel.classList.toggle('aberto');
+  overlay.classList.toggle('visivel');
+}
+function fecharCarrinho() {
+  document.getElementById('carrinho-panel').classList.remove('aberto');
+  document.getElementById('overlay').classList.remove('visivel');
+}
+
+function finalizarWhatsApp() {
+  if (carrinho.length === 0) return;
+  const itens = carrinho.map(i => `• ${i.nome} (${i.volume}) x${i.qtd} = R$ ${(i.preco*i.qtd).toFixed(2)}`).join('%0A');
+  const total = carrinho.reduce((s, i) => s + i.preco * i.qtd, 0);
+  const msg = `Olá! Gostaria de fazer um pedido via CNA Artesanal:%0A%0A${itens}%0A%0A*Total: R$ ${total.toFixed(2)}*%0A%0APode me informar o frete?`;
+  window.open(`https://wa.me/556199963612?text=${msg}`, '_blank');
+}
+
+// ── FILTROS ───────────────────────────────────────────────────────────────
+function filtrarCategoria(cat, btn) {
+  filtroCategoria = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('ativa'));
+  btn.classList.add('ativa');
+  renderizarProdutos();
+}
+function filtrarRegiao(reg, btn) {
+  filtroRegiao = reg;
+  document.querySelectorAll('.regiao-btn').forEach(b => b.classList.remove('ativo'));
+  btn.classList.add('ativo');
+  renderizarProdutos();
+}
+function filtrarNivel(nivel, btn) {
+  filtroNivel = nivel;
+  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+  btn.classList.add('ativo');
+  renderizarProdutos();
+}
+function filtrarBusca(val) {
+  termoBusca = val.toLowerCase().trim();
+  renderizarProdutos();
+}
+function ordenar(val) {
+  if (val === 'menor-preco') produtos.sort((a,b) => Object.values(a.precos)[0] - Object.values(b.precos)[0]);
+  if (val === 'maior-preco') produtos.sort((a,b) => Object.values(b.precos)[0] - Object.values(a.precos)[0]);
+  if (val === 'avaliacao')   produtos.sort((a,b) => b.avaliacao - a.avaliacao);
+  renderizarProdutos();
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────
+function mostrarToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('visivel');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('visivel'), 2400);
+}
+
+// ── IDIOMA (placeholder) ──────────────────────────────────────────────────
+function setLang(lang) {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('ativo'));
+  document.querySelectorAll('.lang-btn').forEach(b => { if(b.textContent === lang.toUpperCase()) b.classList.add('ativo'); });
+  if (lang !== 'pt') mostrarToast('Tradução em desenvolvimento 🌐');
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+renderizarProdutos();
+</script>
+</body>
+</html>
