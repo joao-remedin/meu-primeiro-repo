@@ -101,6 +101,13 @@
   .cargo-nome { font-weight: 700; font-size: 15px; }
   .cargo-digitos { font-size: 12px; color: var(--cinza); }
   .candidato-fixo { font-size: 13px; color: var(--verde-escuro); font-weight: 700; }
+  .achado { font-size: 13px; margin-top: 6px; display: none; }
+  .achado.on { display: block; }
+  .achado.ok { color: var(--verde); font-weight: 700; }
+  .achado.parcial { color: #8a6d00; }
+  .achado.erro { color: #b3261e; font-weight: 700; }
+  input.num.ok { border-color: var(--verde-vivo); background: var(--verde-claro); }
+  input.num.erro { border-color: #b3261e; }
   input.nome {
     display: block; width: 100%; margin-top: 6px;
     border: 1px solid var(--borda); border-radius: 8px;
@@ -193,7 +200,7 @@
   /* Impressão: só a colinha, em tamanho de bolso */
   @media print {
     body { background: #fff; }
-    header, .marca-wrap, .acoes, .bloco, footer, .instrucao, .toast { display: none !important; }
+    header, .marca-wrap, .acoes, .bloco, footer, .instrucao, .toast, .achado { display: none !important; }
     main { margin: 0; padding: 0; max-width: 9cm; }
     .colinha { box-shadow: none; border: 1px solid #000; border-radius: 0; }
     .colinha-topo, li.fixo { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -232,7 +239,7 @@
         <div>
           <div class="cargo-nome">Deputado Federal</div>
           <div class="cargo-digitos">4 dígitos</div>
-          <input class="nome" data-k="fed-nome" placeholder="Nome (opcional)">
+          <input class="nome" data-k="fed-nome" placeholder="Nome do candidato">
         </div>
         <input class="num" data-k="fed" inputmode="numeric" maxlength="4" placeholder="____">
       </li>
@@ -249,7 +256,7 @@
         <div>
           <div class="cargo-nome">Senador · 1ª vaga</div>
           <div class="cargo-digitos">3 dígitos</div>
-          <input class="nome" data-k="sen1-nome" placeholder="Nome (opcional)">
+          <input class="nome" data-k="sen1-nome" placeholder="Nome do candidato">
         </div>
         <input class="num" data-k="sen1" inputmode="numeric" maxlength="3" placeholder="___">
       </li>
@@ -258,7 +265,7 @@
         <div>
           <div class="cargo-nome">Senador · 2ª vaga</div>
           <div class="cargo-digitos">3 dígitos</div>
-          <input class="nome" data-k="sen2-nome" placeholder="Nome (opcional)">
+          <input class="nome" data-k="sen2-nome" placeholder="Nome do candidato">
         </div>
         <input class="num" data-k="sen2" inputmode="numeric" maxlength="3" placeholder="___">
       </li>
@@ -267,7 +274,7 @@
         <div>
           <div class="cargo-nome">Governador</div>
           <div class="cargo-digitos">2 dígitos</div>
-          <input class="nome" data-k="gov-nome" placeholder="Nome (opcional)">
+          <input class="nome" data-k="gov-nome" placeholder="Nome do candidato">
         </div>
         <input class="num" data-k="gov" inputmode="numeric" maxlength="2" placeholder="__">
       </li>
@@ -276,7 +283,7 @@
         <div>
           <div class="cargo-nome">Presidente</div>
           <div class="cargo-digitos">2 dígitos</div>
-          <input class="nome" data-k="pres-nome" placeholder="Nome (opcional)">
+          <input class="nome" data-k="pres-nome" placeholder="Nome do candidato">
         </div>
         <input class="num" data-k="pres" inputmode="numeric" maxlength="2" placeholder="__">
       </li>
@@ -338,6 +345,7 @@
 </footer>
 <div class="toast" id="toast"></div>
 
+<script src="candidatos.js"></script>
 <script>
   // Campos da colinha: só dígitos, lembrados neste aparelho
   const campos = document.querySelectorAll('[data-k]');
@@ -347,6 +355,63 @@
       if (el.classList.contains('num')) el.value = el.value.replace(/\D/g, '');
       try { localStorage.setItem('colinha-' + el.dataset.k, el.value); } catch (e) {}
     });
+  });
+
+  // Ao digitar o número, mostra o candidato correspondente
+  const TAMANHO = { fed: 4, sen1: 3, sen2: 3, gov: 2, pres: 2 };
+  const LISTA = { fed: 'fed', sen1: 'sen', sen2: 'sen', gov: 'gov', pres: 'pres' };
+  const C = window.CANDIDATOS || {}, P = window.PARTIDOS || {};
+
+  // Sugestões ao tocar no campo (presidente, governador e senado)
+  ['pres', 'gov', 'sen'].forEach(tipo => {
+    const dl = document.createElement('datalist');
+    dl.id = 'dl-' + tipo;
+    Object.entries(C[tipo] || {}).forEach(([n, nome]) => {
+      const o = document.createElement('option'); o.value = n; o.label = nome; o.textContent = nome; dl.appendChild(o);
+    });
+    document.body.appendChild(dl);
+  });
+
+  Object.keys(TAMANHO).forEach(k => {
+    const num = document.querySelector(`[data-k="${k}"]`);
+    const nome = document.querySelector(`[data-k="${k}-nome"]`);
+    const msg = document.createElement('div');
+    msg.className = 'achado';
+    nome.insertAdjacentElement('beforebegin', msg);
+    if (LISTA[k] !== 'fed') num.setAttribute('list', 'dl-' + LISTA[k]);
+    nome.addEventListener('input', () => { delete nome.dataset.auto; });
+
+    function confere(digitando) {
+      const n = num.value;
+      num.classList.remove('ok', 'erro');
+      msg.className = 'achado';
+      const curto = x => x.replace(/ \([^)]*\)$/, '');
+      const auto = nome.dataset.auto || Object.values(C[LISTA[k]] || {}).some(x => curto(x) === nome.value);
+      if (auto && nome.value && curto((C[LISTA[k]] || {})[n] || '') !== nome.value) {
+        nome.value = ''; delete nome.dataset.auto;
+        try { localStorage.setItem('colinha-' + k + '-nome', ''); } catch (e) {}
+      }
+      if (n.length < TAMANHO[k]) return;
+      const achou = (C[LISTA[k]] || {})[n];
+      const partido = P[n.slice(0, 2)];
+      if (achou) {
+        num.classList.add('ok');
+        msg.textContent = '✓ ' + achou; msg.className = 'achado on ok';
+        if (digitando || !nome.value) {
+          nome.value = curto(achou); nome.dataset.auto = '1';
+          try { localStorage.setItem('colinha-' + k + '-nome', nome.value); } catch (e) {}
+        }
+      } else if (partido) {
+        msg.textContent = 'Número do ' + partido + '. Confira o nome no santinho.';
+        msg.className = 'achado on parcial';
+      } else {
+        num.classList.add('erro');
+        msg.textContent = 'Nenhum partido usa o número ' + n.slice(0, 2) + '. Confira.';
+        msg.className = 'achado on erro';
+      }
+    }
+    num.addEventListener('input', () => confere(true));
+    confere(false);
   });
 
   const val = k => (document.querySelector(`[data-k="${k}"]`).value || '').trim();
