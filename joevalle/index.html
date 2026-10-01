@@ -7,16 +7,20 @@
 <meta name="description" content="Monte sua colinha para o dia da eleição. Deputado Distrital: Joe Valle da Malunga, 12345.">
 <meta property="og:title" content="Minha colinha: Joe Valle 12345 para Distrital">
 <meta property="og:description" content="Monte a sua colinha e leve no dia da votação.">
+<meta property="og:image" content="img/vote-12345.jpg">
+<meta name="theme-color" content="#17765f">
+<link rel="icon" href="img/logo.png">
 <style>
   :root {
-    --verde: #1f6b3a;
-    --verde-escuro: #144a27;
-    --verde-claro: #e8f3ec;
-    --amarelo: #f5c518;
+    --verde: #17765f;        /* verde-petróleo da marca */
+    --verde-escuro: #0f5444;
+    --verde-vivo: #00a859;   /* verde "DA" / "DEPUTADO" */
+    --lima: #c0d93d;         /* verde-limão "VALLE" / "MALUNGA" */
+    --verde-claro: #eaf5ef;
     --texto: #1c1c1c;
-    --cinza: #6b6b6b;
-    --borda: #d9d9d9;
-    --fundo: #f6f4ee;
+    --cinza: #5f6b66;
+    --borda: #d9e2dd;
+    --fundo: #f4f7f2;
     --branco: #ffffff;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,48 +30,56 @@
     color: var(--texto);
     line-height: 1.4;
   }
+  img { max-width: 100%; height: auto; display: block; }
 
-  /* Topo */
-  header {
-    background: var(--verde);
-    color: var(--branco);
+  /* Topo com foto */
+  header.hero {
+    position: relative;
+    background:
+      radial-gradient(120% 80% at 50% 100%, var(--lima) 0%, transparent 55%),
+      linear-gradient(180deg, var(--verde-vivo) 0%, var(--verde) 100%);
     text-align: center;
-    padding: 32px 16px 72px;
+    padding-top: 22px;
+    overflow: hidden;
   }
-  header .kicker {
-    font-size: 13px; letter-spacing: .14em; text-transform: uppercase; opacity: .85;
+  .hero .kicker {
+    color: var(--branco); font-size: 13px; font-weight: 700;
+    letter-spacing: .16em; text-transform: uppercase;
   }
-  header h1 { font-size: clamp(30px, 8vw, 46px); line-height: 1.05; margin: 8px 0 4px; }
-  header .cargo { font-size: 17px; opacity: .95; }
-  .numero-destaque {
-    display: inline-block;
-    margin-top: 18px;
-    background: var(--amarelo);
-    color: var(--verde-escuro);
-    font-weight: 800;
-    font-size: clamp(44px, 14vw, 72px);
-    letter-spacing: .12em;
-    padding: 4px 22px 4px 32px;
-    border-radius: 12px;
-    font-variant-numeric: tabular-nums;
+  .hero .foto {
+    width: min(64%, 300px); margin: 10px auto 0;
+    filter: drop-shadow(0 10px 24px rgba(0,0,0,.25));
   }
 
-  main { max-width: 560px; margin: -48px auto 0; padding: 0 16px 48px; }
+  .marca {
+    position: relative; z-index: 2;
+    max-width: 528px; margin: -84px auto 0;
+    background: var(--branco);
+    border-radius: 16px;
+    padding: 18px 22px 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.14);
+  }
+  .marca-wrap { padding: 0 16px; }
+  .marca img { width: 100%; max-width: 420px; margin: 0 auto; }
+  .marca p { text-align: center; color: var(--cinza); font-size: 14px; margin-top: 10px; }
+
+  main { max-width: 560px; margin: 20px auto 0; padding: 0 16px 40px; }
 
   /* Cartão da colinha */
   .colinha {
     background: var(--branco);
     border-radius: 16px;
-    box-shadow: 0 8px 28px rgba(0,0,0,.10);
+    box-shadow: 0 8px 28px rgba(0,0,0,.08);
     overflow: hidden;
   }
   .colinha-topo {
-    padding: 18px 20px 6px;
+    background: var(--verde); color: var(--branco);
+    padding: 14px 20px;
     display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
   }
-  .colinha-topo h2 { font-size: 20px; }
-  .colinha-topo span { font-size: 13px; color: var(--cinza); }
-  .instrucao { padding: 0 20px 12px; font-size: 14px; color: var(--cinza); }
+  .colinha-topo h2 { font-size: 20px; letter-spacing: .02em; }
+  .colinha-topo span { font-size: 13px; opacity: .85; }
+  .instrucao { padding: 12px 20px; font-size: 14px; color: var(--cinza); }
 
   ol.cargos { list-style: none; }
   ol.cargos li {
@@ -78,7 +90,7 @@
     padding: 14px 20px;
     border-top: 1px solid var(--borda);
   }
-  ol.cargos li.fixo { background: var(--verde-claro); }
+  ol.cargos li.fixo { background: var(--lima); }
   .ordem {
     width: 28px; height: 28px; border-radius: 50%;
     background: var(--fundo); color: var(--cinza);
@@ -88,7 +100,7 @@
   li.fixo .ordem { background: var(--verde); color: var(--branco); }
   .cargo-nome { font-weight: 700; font-size: 15px; }
   .cargo-digitos { font-size: 12px; color: var(--cinza); }
-  .candidato-fixo { font-size: 13px; color: var(--verde-escuro); font-weight: 600; }
+  .candidato-fixo { font-size: 13px; color: var(--verde-escuro); font-weight: 700; }
   input.nome {
     display: block; width: 100%; margin-top: 6px;
     border: 1px solid var(--borda); border-radius: 8px;
@@ -101,10 +113,10 @@
     text-align: center; letter-spacing: .08em;
     font-variant-numeric: tabular-nums; font-family: inherit;
   }
-  input:focus { outline: none; border-color: var(--verde); }
+  input:focus { outline: none; border-color: var(--verde-vivo); }
   .num-fixo {
-    font-size: 26px; font-weight: 800; color: var(--verde-escuro);
-    letter-spacing: .08em; font-variant-numeric: tabular-nums;
+    font-size: 28px; font-weight: 900; color: var(--verde);
+    letter-spacing: .06em; font-variant-numeric: tabular-nums;
   }
 
   /* Botões */
@@ -113,23 +125,35 @@
     appearance: none; border: 0; cursor: pointer;
     border-radius: 10px; padding: 14px 12px;
     font-size: 15px; font-weight: 700; font-family: inherit;
-    text-align: center; text-decoration: none;
+    text-align: center; text-decoration: none; display: block;
   }
   .btn-whats { background: #25d366; color: #fff; grid-column: 1 / -1; font-size: 16px; }
   .btn-sec { background: var(--fundo); color: var(--texto); }
+  .btn-verde { background: var(--verde); color: var(--branco); }
 
-  /* Urna de treino */
+  /* Blocos */
   .bloco {
     background: var(--branco); border-radius: 16px; margin-top: 20px; padding: 20px;
     box-shadow: 0 4px 16px rgba(0,0,0,.06);
   }
-  .bloco h3 { font-size: 18px; margin-bottom: 6px; }
-  .bloco p { font-size: 14px; color: var(--cinza); }
+  .bloco h3 { font-size: 19px; margin-bottom: 6px; color: var(--verde-escuro); }
+  .bloco p { font-size: 15px; color: var(--cinza); }
+  .bloco .arte { border-radius: 12px; margin: 14px 0; }
+
+  .cerrado { background: var(--verde); color: var(--branco); }
+  .cerrado h3 { color: var(--branco); font-size: 26px; line-height: 1.1; }
+  .cerrado h3 em { color: var(--lima); font-style: normal; }
+  .cerrado p { color: rgba(255,255,255,.9); }
+  .cerrado strong { color: var(--lima); }
+
+  /* Urna de treino */
   .urna { margin-top: 14px; display: grid; gap: 14px; }
   .tela {
     background: #f2f2f2; border: 2px solid #c9c9c9; border-radius: 6px;
     padding: 14px; min-height: 150px; font-family: Arial, sans-serif;
+    display: grid; grid-template-columns: 1fr auto; gap: 10px;
   }
+  .tela .t-foto { width: 72px; align-self: start; border: 1px solid #bbb; background: #fff; }
   .tela .t-cargo { font-size: 13px; color: #555; }
   .tela .t-titulo { font-size: 18px; font-weight: 700; margin: 4px 0 10px; }
   .caixas { display: flex; gap: 6px; }
@@ -140,7 +164,7 @@
   .caixas span.ativa { animation: pisca 1s steps(2) infinite; }
   @keyframes pisca { 50% { background: #ddd; } }
   .t-info { margin-top: 10px; font-size: 14px; min-height: 40px; }
-  .t-fim { font-size: 40px; font-weight: 800; text-align: center; padding-top: 34px; color: #333; }
+  .t-fim { grid-column: 1 / -1; font-size: 40px; font-weight: 800; text-align: center; padding-top: 34px; color: #333; }
   .teclado {
     background: #2b2b2b; border-radius: 10px; padding: 12px;
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
@@ -153,9 +177,11 @@
   .b-corrige { background: #f28c28 !important; }
   .b-confirma { background: #2fa84f !important; }
 
-  .dicas li { font-size: 14px; color: var(--texto); margin: 8px 0 0 18px; }
+  .dicas li { font-size: 15px; color: var(--texto); margin: 8px 0 0 18px; }
 
-  footer { text-align: center; font-size: 12px; color: var(--cinza); padding: 0 16px 32px; }
+  footer { background: var(--verde); color: var(--branco); text-align: center; padding: 26px 16px 32px; }
+  footer img { width: 180px; margin: 0 auto 10px; background: var(--branco); padding: 10px; border-radius: 10px; }
+  footer p { font-size: 13px; opacity: .85; }
 
   .toast {
     position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
@@ -167,9 +193,10 @@
   /* Impressão: só a colinha, em tamanho de bolso */
   @media print {
     body { background: #fff; }
-    header, .acoes, .bloco, footer, .instrucao, .toast { display: none !important; }
+    header, .marca-wrap, .acoes, .bloco, footer, .instrucao, .toast { display: none !important; }
     main { margin: 0; padding: 0; max-width: 9cm; }
     .colinha { box-shadow: none; border: 1px solid #000; border-radius: 0; }
+    .colinha-topo, li.fixo { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     input { border: 0 !important; padding: 0 !important; }
     input.nome:placeholder-shown { display: none; }
     input::placeholder { color: transparent; }
@@ -179,12 +206,17 @@
 </head>
 <body>
 
-<header>
+<header class="hero">
   <div class="kicker">Minha colinha · Eleições 2026</div>
-  <h1>Joe Valle<br>da Malunga</h1>
-  <div class="cargo">Deputado Distrital · PDT</div>
-  <div class="numero-destaque">12345</div>
+  <img class="foto" src="img/joe-punho.webp" alt="Joe Valle sorrindo, com o punho erguido" width="800" height="1141">
 </header>
+
+<div class="marca-wrap">
+  <div class="marca">
+    <img src="img/logo.png" alt="Joe Valle da Malunga · Deputado Distrital · 12345" width="810" height="600">
+    <p>Para Deputado Distrital, digite <strong>12345</strong> e confirme.</p>
+  </div>
+</div>
 
 <main>
   <section class="colinha" id="colinha">
@@ -257,6 +289,12 @@
     </div>
   </section>
 
+  <section class="bloco cerrado">
+    <h3>Seu voto<br><em>vira árvore.</em></h3>
+    <img class="arte" src="img/cerrado.jpg" alt="Placa 'Seu voto vira árvore' presa a uma muda no Cerrado" width="900" height="1125" loading="lazy">
+    <p>A cada voto recebido, <strong>duas mudas nativas do Cerrado</strong> serão plantadas. Vote pelo Cerrado. Vote Joe Valle.</p>
+  </section>
+
   <section class="bloco">
     <h3>Treine na urna</h3>
     <p>Digite 1 2 3 4 5 e aperte CONFIRMA para ver como fica o voto em Deputado Distrital.</p>
@@ -277,6 +315,13 @@
   </section>
 
   <section class="bloco">
+    <h3>Espalhe o 12345</h3>
+    <p>Baixe a arte e poste no status do WhatsApp ou no Instagram.</p>
+    <img class="arte" src="img/vote-12345.jpg" alt="Arte 'Vote 12345' com ilustrações do Joe Valle" width="900" height="1125" loading="lazy">
+    <a class="btn btn-verde" href="img/vote-12345.jpg" download="vote-joe-valle-12345.jpg">Baixar arte</a>
+  </section>
+
+  <section class="bloco">
     <h3>No dia da eleição</h3>
     <ul class="dicas">
       <li>Votação no domingo, <strong>4 de outubro de 2026</strong>, das 8h às 17h (horário de Brasília).</li>
@@ -287,7 +332,10 @@
   </section>
 </main>
 
-<footer>Joe Valle da Malunga · Deputado Distrital · PDT 12345</footer>
+<footer>
+  <img src="img/logo.png" alt="Joe Valle da Malunga · Deputado Distrital · 12345" width="810" height="600" loading="lazy">
+  <p>Joe Valle da Malunga · Deputado Distrital · PDT 12345</p>
+</footer>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -346,10 +394,11 @@
     if (branco) info = '<strong>VOTO EM BRANCO</strong>';
     else if (digitos === '12345') info = 'Nome: <strong>JOE VALLE DA MALUNGA</strong><br>Partido: PDT';
     else if (digitos.length === 5) info = '<strong>NÚMERO ERRADO</strong> — aperte CORRIGE';
-    tela.innerHTML = `<div class="t-cargo">SEU VOTO PARA</div>
+    const foto = digitos === '12345' ? '<img class="t-foto" src="img/joe-punho.webp" alt="">' : '';
+    tela.innerHTML = `<div><div class="t-cargo">SEU VOTO PARA</div>
       <div class="t-titulo">Deputado Distrital</div>
       <div class="caixas">${branco ? '' : caixas}</div>
-      <div class="t-info">${info}</div>`;
+      <div class="t-info">${info}</div></div>${foto}`;
   }
   document.getElementById('teclado').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
